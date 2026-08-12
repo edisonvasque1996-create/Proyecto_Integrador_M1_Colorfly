@@ -7,7 +7,7 @@ TECNOLOGIAS UTILIZADAS
 
 - HTML5: Para una estructura de contenido semántica e idónea.
 - CSS3: Para el diseño, estilo y la optimización de la interfaz visual.
-- JavaScript (ES6+): Para la lógica de negocio y la manipulación dinámica del DOM, permitiendo la generación aleatoria de paletas en tiempo real.
+- JavaScript: Para la lógica de negocio y la manipulación dinámica del DOM, permitiendo la generación aleatoria de paletas en tiempo real.
 
 ESTRUCTURA DEL PROYECTO 
 nombre-de-tu-proyecto/

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colorfly Studio</title>
-    <link rel="stylesheet" href="/css/styles.css"> 
+    <title>Colorfly Studio | Generador de Paletas</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <header class="header">
@@ -13,10 +13,9 @@
     </header>
 
     <main class="main-container">
-        <!-- Controles de la aplicación -->
         <section class="controls-section" aria-label="Controles de generación">
             <div class="control-group">
-                <label for="palette-size">Tamaño de la paleta:</label>
+                <label for="palette-size">Tamaño:</label>
                 <select id="palette-size" aria-label="Seleccionar tamaño de la paleta">
                     <option value="6">6 colores</option>
                     <option value="8" selected>8 colores</option>
@@ -24,20 +23,25 @@
                 </select>
             </div>
 
+            <div class="control-group">
+                <label for="color-format">Formato:</label>
+                <select id="color-format" aria-label="Seleccionar formato de color">
+                    <option value="hex" selected>HEX</option>
+                    <option value="hsl">HSL</option>
+                </select>
+            </div>
+
             <button id="generate-btn" class="btn-primary">Generar paleta</button>
         </section>
 
-        <!-- Contenedor dinámico de la paleta -->
         <section class="palette-section" aria-label="Paleta de colores generada">
             <div id="palette-container" class="palette-grid">
-                <!-- Los colores se inyectarán dinámicamente mediante JavaScript -->
-            </div>
+                </div>
         </section>
     </main>
 
-    <!-- Microfeedback (Toast) -->
     <div id="toast" class="toast" role="status" aria-live="polite">¡Código copiado al portapapeles!</div>
 
-    <script src="/js/script.js"></script>   
+    <script src="/js/script.js"></script>
 </body>
 </html>
