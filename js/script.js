@@ -1,105 +1,217 @@
-const generateBtn = document.getElementById('generate-btn');
-const paletteSizeSelect = document.getElementById('palette-size');
-const colorFormatSelect = document.getElementById('color-format');
-const paletteContainer = document.getElementById('palette-container');
-const paletteBackdrop = document.getElementById('palette-backdrop');
-const toast = document.getElementById('toast');
+document.addEventListener('DOMContentLoaded', () => {
+    const paletteContainer = document.getElementById('palette-container');
+    const generateBtn = document.getElementById('generate-btn');
+    const savePaletteBtn = document.getElementById('save-palette-btn');
+    const paletteSizeSelect = document.getElementById('palette-size');
+    const colorFormatSelect = document.getElementById('color-format');
+    const savedPalettesContainer = document.getElementById('saved-palettes-container');
+    const toast = document.getElementById('toast');
 
-function getRandomHex() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
+    // Cargar paletas guardadas desde localStorage al iniciar
+    let savedPalettes = JSON.parse(localStorage.getItem('savedPalettes')) || [];
+    renderSavedPalettes();
 
-function hexToHsl(hex) {
-    let r = parseInt(hex.slice(1, 3), 16) / 255;
-    let g = parseInt(hex.slice(3, 5), 16) / 255;
-    let b = parseInt(hex.slice(5, 7), 16) / 255;
-
-    let max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h, s, l = (max + min) / 2;
-
-    if (max === min) {
-        h = s = 0;
-    } else {
-        let d = max - min;
-        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-        switch (max) {
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
+    // Generar un color aleatorio en HEX
+    function getRandomHex() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
         }
-        h /= 6;
+        return color;
     }
 
-    return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
-}
-
-function generatePaletteArray(count) {
-    const palette = [];
-    for (let i = 0; i < count; i++) {
-        const hex = getRandomHex();
-        const hsl = hexToHsl(hex);
-        palette.push({ hex, hsl });
+    // Generar un color aleatorio en HSL
+    function getRandomHsl() {
+        const h = Math.floor(Math.random() * 360);
+        const s = Math.floor(Math.random() * 61) + 40; // 40% - 100%
+        const l = Math.floor(Math.random() * 51) + 25; // 25% - 75%
+        return `hsl(${h}, ${s}%, ${l}%)`;
     }
-    return palette;
-}
 
-function showToast() {
-    toast.classList.add('show');
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 2000);
-}
+    // Función principal para generar paleta
+    function generatePalette() {
+        const size = parseInt(paletteSizeSelect.value);
+        const format = colorFormatSelect.value;
+        const existingCards = paletteContainer.children;
 
-function renderPalette() {
-    const size = parseInt(paletteSizeSelect.value, 10);
-    const selectedFormat = colorFormatSelect.value;
-    const colorDataArray = generatePaletteArray(size);
+        // Si ya hay tarjetas, respetamos las que estén bloqueadas
+        const currentColors = [];
+        for (let i = 0; i < existingCards.length; i++) {
+            const card = existingCards[i];
+            if (card.classList.contains('locked')) {
+                currentColors.push({
+                    color: card.style.backgroundColor,
+                    locked: true
+                });
+            } else {
+                currentColors.push({
+                    color: null,
+                    locked: false
+                });
+            }
+        }
 
-    paletteContainer.innerHTML = '';
+        paletteContainer.innerHTML = '';
 
-    // NUEVO: Degradado dinámico mucho más vivo y brillante en el fondo
-    const hexColors = colorDataArray.map(c => c.hex);
-    const firstColor = hexColors[0];
-    const middleColor = hexColors[Math.floor(hexColors.length / 2)];
-    const lastColor = hexColors[hexColors.length - 1];
+        for (let i = 0; i < size; i++) {
+            let colorValue;
+            let isLocked = false;
 
-    const dynamicGradient = `linear-gradient(135deg, ${firstColor}55, ${middleColor}44, ${lastColor}55)`;
-    paletteBackdrop.style.setProperty('--dynamic-gradient', dynamicGradient);
+            // Si ya existía y estaba bloqueada, conservamos su color
+            if (currentColors[i] && currentColors[i].locked) {
+                colorValue = currentColors[i].color;
+                isLocked = true;
+            } else {
+                colorValue = format === 'hex' ? getRandomHex() : getRandomHsl();
+            }
 
-    colorDataArray.forEach(colorObj => {
+            createColorCard(colorValue, isLocked);
+        }
+    }
+
+    // Crear dinámicamente cada tarjeta de color con sus iconos
+    function createColorCard(colorValue, isLocked = false) {
         const card = document.createElement('div');
-        card.className = 'color-card';
-        card.setAttribute('tabindex', '0');
-        card.setAttribute('role', 'button');
+        card.classList.add('color-card');
+        if (isLocked) card.classList.add('locked');
+        card.style.backgroundColor = colorValue;
+
+        // Contenedor de iconos (Bloquear y Copiar)
+        const actionsDiv = document.createElement('div');
+        actionsDiv.classList.add('card-actions');
+
+        // Botón de Bloqueo
+        const lockBtn = document.createElement('button');
+        lockBtn.classList.add('card-action-btn', 'lock-btn');
+        lockBtn.innerHTML = `<i class="fa-solid ${isLocked ? 'fa-lock' : 'fa-lock-open'}"></i>`;
+        lockBtn.title = "Bloquear / Desbloquear color";
         
-        const primaryValue = selectedFormat === 'hex' ? colorObj.hex : colorObj.hsl;
-        card.setAttribute('aria-label', `Copiar color ${primaryValue}`);
+        lockBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            card.classList.toggle('locked');
+            const lockedNow = card.classList.contains('locked');
+            lockBtn.innerHTML = `<i class="fa-solid ${lockedNow ? 'fa-lock' : 'fa-lock-open'}"></i>`;
+        });
 
-        card.innerHTML = `
-            <div class="color-box" style="background-color: ${colorObj.hex};"></div>
-            <div class="color-info">
-                <span class="color-hex">${primaryValue}</span>
-                <span class="color-hsl">${selectedFormat.toUpperCase()}</span>
-            </div>
-        `;
+        // Botón de Copiar
+        const copyBtn = document.createElement('button');
+        copyBtn.classList.add('card-action-btn', 'copy-btn');
+        copyBtn.innerHTML = `<i class="fa-solid fa-copy"></i>`;
+        copyBtn.title = "Copiar color al portapapeles";
 
+        copyBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Convertir color a formato texto legible si es necesario
+            navigator.clipboard.writeText(colorValue).then(() => {
+                showToast(`¡Copiado: ${colorValue}!`);
+            });
+        });
+
+        actionsDiv.appendChild(lockBtn);
+        actionsDiv.appendChild(copyBtn);
+
+        // Información de texto del color
+        const info = document.createElement('div');
+        info.classList.add('color-info');
+        info.textContent = colorValue;
+
+        card.appendChild(actionsDiv);
+        card.appendChild(info);
+
+        // Permitir copiar también haciendo clic en la tarjeta entera
         card.addEventListener('click', () => {
-            navigator.clipboard.writeText(primaryValue).then(() => {
-                showToast();
+            navigator.clipboard.writeText(colorValue).then(() => {
+                showToast(`¡Copiado: ${colorValue}!`);
             });
         });
 
         paletteContainer.appendChild(card);
+    }
+
+    // Guardar la paleta actual en la barra lateral
+    savePaletteBtn.addEventListener('click', () => {
+        const cards = paletteContainer.children;
+        if (cards.length === 0) return;
+
+        const paletteColors = [];
+        for (let card of cards) {
+            paletteColors.push(card.style.backgroundColor);
+        }
+
+        savedPalettes.push(paletteColors);
+        localStorage.setItem('savedPalettes', JSON.stringify(savedPalettes));
+        renderSavedPalettes();
+        showToast('¡Paleta guardada en la barra lateral!');
     });
-}
 
-generateBtn.addEventListener('click', renderPalette);
-paletteSizeSelect.addEventListener('change', renderPalette);
-colorFormatSelect.addEventListener('change', renderPalette);
+    // Renderizar paletas guardadas en la barra lateral
+    function renderSavedPalettes() {
+        savedPalettesContainer.innerHTML = '';
 
-document.addEventListener('DOMContentLoaded', renderPalette);
+        if (savedPalettes.length === 0) {
+            savedPalettesContainer.innerHTML = '<p style="font-size: 0.8rem; opacity: 0.7;">No hay paletas guardadas.</p>';
+            return;
+        }
+
+        savedPalettes.forEach((palette, index) => {
+            const item = document.createElement('div');
+            item.classList.add('saved-palette-item');
+
+            const colorsPreview = document.createElement('div');
+            colorsPreview.classList.add('saved-palette-colors');
+            colorsPreview.title = "Haz clic para cargar esta paleta";
+
+            palette.forEach(col => {
+                const box = document.createElement('div');
+                box.classList.add('mini-color-box');
+                box.style.backgroundColor = col;
+                colorsPreview.appendChild(box);
+            });
+
+            // Cargar la paleta guardada al hacer clic en la miniatura
+            colorsPreview.addEventListener('click', () => {
+                paletteContainer.innerHTML = '';
+                palette.forEach(col => createColorCard(col, false));
+                showToast('Paleta cargada');
+            });
+
+            // Botón para borrar la paleta guardada (Icono de papelera)
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('delete-palette-btn');
+            deleteBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
+            deleteBtn.title = "Eliminar paleta guardada";
+
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                savedPalettes.splice(index, 1);
+                localStorage.setItem('savedPalettes', JSON.stringify(savedPalettes));
+                renderSavedPalettes();
+                showToast('Paleta eliminada');
+            });
+
+            item.appendChild(colorsPreview);
+            item.appendChild(deleteBtn);
+            savedPalettesContainer.appendChild(item);
+        });
+    }
+
+    // Mostrar notificación Toast
+    function showToast(message) {
+        toast.textContent = message;
+        toast.classList.remove('hidden');
+        toast.classList.add('show');
+
+        clearTimeout(showToast.timeoutId);
+        showToast.timeoutId = setTimeout(() => {
+            toast.classList.remove('show');
+            toast.classList.add('hidden');
+        }, 2000);
+    }
+
+    // Event listeners
+    generateBtn.addEventListener('click', generatePalette);
+
+    // Generar la primera paleta automáticamente al cargar la página
+    generatePalette();
+});

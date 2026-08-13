@@ -10,8 +10,9 @@ TECNOLOGIAS UTILIZADAS
 - CSS3: Para el diseño, estilo y la optimización de la interfaz visual.
 - JavaScript: Para la lógica de negocio y la manipulación dinámica del DOM, permitiendo la generación aleatoria de paletas en tiempo real.
 
-ESTRUCTURA DEL PROYECTO 
-nombre-de-tu-proyecto/
+ESTRUCTURA DEL PROYECTO
+ 
+Proyecto_Integrador_M1_Colorfly/
 ├── index.html          # Estructura principal y semántica
 ├── css/
 │   └── styles.css      # Estilos y diseño visual
@@ -35,8 +36,26 @@ Esta aplicación está diseñada para servir como una herramienta de apoyo visua
 
 - DESICIONES TECNICAS
 
-1) Estructura base (Rama principal): El desarrollo partió de una arquitectura limpia basada en las directrices iniciales del proyecto, priorizando una lectura de código semántica, ordenada y fácil de mantener.
+1) Estructura Base y Arquitectura (Rama Principal)
 
-2) Evolución visual y de interfaz: A partir de la estructura base, se implementaron iteraciones enfocadas en la optimización de la experiencia de usuario (UX/UI), mejorando la disposición de los elementos, la fluidez de interacción y la adaptabilidad visual de la herramienta.
+El desarrollo partió de una arquitectura limpia basada en los fundamentos del DOM y las directrices del proyecto, priorizando el uso de etiquetas HTML5 semánticas (<aside>, <main>, <section>) para comunicar claramente el propósito de cada sección.
+
+Se aseguró una estricta separación de responsabilidades: diseño visual delegado al CSS externo (evitando estilos inline) y la lógica de negocio y reactividad manejada mediante JavaScript modular.
+
+2) Evolución visual y de interfaz
+
+A partir de la estructura base, se implementaron iteraciones enfocadas en optimizar la experiencia del usuario, mejorando la disposición visual de las tarjetas de colores, la fluidez en las interacciones y la adaptabilidad de la herramienta.
+
+Se unificaron los estilos visuales para garantizar la compatibilidad con los modos de visualización (como el soporte coherente de tarjetas y paletas dinámicas de 6, 8 o 9 elementos).
+
+3) Interactividad y Control de Estado en el Cliente
+
+Generación Dinámica: Implementación de algoritmos en JavaScript para la creación procedural de colores aleatorios en formatos de color configurables.
+
+Gestión de Funcionalidades Avanzadas: * Incorporación de un sistema de bloqueo de colores individuales mediante iconos (candados) para preservar selecciones específicas durante la generación de nuevas paletas.
+
+Integración de un portapapeles interactivo con retroalimentación visual inmediata mediante notificaciones flotantes tipo Toast.
+
+Almacenamiento local persistente (localStorage) para guardar paletas favoritas directamente desde la barra lateral, permitiendo su consulta posterior y eliminación individualizada.
 
 PROMPS ENLACE EN DRIVE: 
