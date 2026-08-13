@@ -2,6 +2,7 @@ Aplicación web interactiva diseñada para la generación dinámica de paletas d
 
 Proyecto Integrador #1
 Desarrollado por: Edison Minango
+link: https://edisonvasque1996-create.github.io/Proyecto_Integrador_M1_Colorfly/ 
 
 TECNOLOGIAS UTILIZADAS 
 
@@ -15,7 +16,7 @@ nombre-de-tu-proyecto/
 ├── css/
 │   └── styles.css      # Estilos y diseño visual
 ├── js/
-│   └── main.js         # Lógica de manipulación del DOM y generación de paletas
+│   └── script.js       # Lógica de manipulación del DOM y generación de paletas
 └── README.md           # Documentación del proyecto
 
 
@@ -38,3 +39,4 @@ Esta aplicación está diseñada para servir como una herramienta de apoyo visua
 
 2) Evolución visual y de interfaz: A partir de la estructura base, se implementaron iteraciones enfocadas en la optimización de la experiencia de usuario (UX/UI), mejorando la disposición de los elementos, la fluidez de interacción y la adaptabilidad visual de la herramienta.
 
+PROMPS ENLACE EN DRIVE: 

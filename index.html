@@ -7,38 +7,42 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header class="header">
-        <h1>Colorfly Studio</h1>
-        <p>Generador interactivo de paletas de colores</p>
-    </header>
-
-    <main class="main-container">
-        <section class="controls-section" aria-label="Controles de generación">
-            <div class="control-group">
-                <label for="palette-size">Tamaño:</label>
-                <select id="palette-size" aria-label="Seleccionar tamaño de la paleta">
-                    <option value="6">6 colores</option>
-                    <option value="8" selected>8 colores</option>
-                    <option value="9">9 colores</option>
-                </select>
+    <div class="app-layout">
+        <aside class="sidebar" aria-label="Panel de control y configuración">
+            <div class="sidebar-header">
+                <h1>Colorfly Studio</h1>
+                <p>Generador interactivo de paletas de colores</p>
             </div>
 
-            <div class="control-group">
-                <label for="color-format">Formato:</label>
-                <select id="color-format" aria-label="Seleccionar formato de color">
-                    <option value="hex" selected>HEX</option>
-                    <option value="hsl">HSL</option>
-                </select>
-            </div>
-
-            <button id="generate-btn" class="btn-primary">Generar paleta</button>
-        </section>
-
-        <section class="palette-section" aria-label="Paleta de colores generada">
-            <div id="palette-container" class="palette-grid">
+            <div class="sidebar-controls">
+                <div class="control-group">
+                    <label for="palette-size">Tamaño de paleta:</label>
+                    <select id="palette-size" aria-label="Seleccionar tamaño de la paleta">
+                        <option value="6">6 colores</option>
+                        <option value="8" selected>8 colores</option>
+                        <option value="9">9 colores</option>
+                    </select>
                 </div>
-        </section>
-    </main>
+
+                <div class="control-group">
+                    <label for="color-format">Formato:</label>
+                    <select id="color-format" aria-label="Seleccionar formato de color">
+                        <option value="hex" selected>HEX</option>
+                        <option value="hsl">HSL</option>
+                    </select>
+                </div>
+
+                <button id="generate-btn" class="btn-primary">Generar paleta</button>
+            </div>
+        </aside>
+
+        <main class="main-content" aria-label="Área de visualización de paleta">
+            <section id="palette-backdrop" class="palette-backdrop">
+                <div id="palette-container" class="palette-grid">
+                    </div>
+            </section>
+        </main>
+    </div>
 
     <div id="toast" class="toast" role="status" aria-live="polite">¡Código copiado al portapapeles!</div>
 
