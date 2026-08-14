@@ -347,3 +347,80 @@ select:focus, button:focus {
         height: 80vh;
     }
 }
+
+/* =========================================
+   DISEÑO RESPONSIVO (Tablets y Celulares)
+   ========================================= */
+
+/* Para Tablets y dispositivos medianos (Ancho menor o igual a 1024px) */
+@media screen and (max-width: 1024px) {
+    .app-layout {
+        flex-direction: column; /* Cambia el diseño de lado a lado a columna vertical */
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        width: 100%; /* La barra lateral ocupa todo el ancho */
+        height: auto;
+        padding: 20px;
+    }
+
+    .main-content, 
+    .palette-backdrop {
+        width: 100%;
+        min-height: 500px;
+        padding: 20px;
+    }
+
+    .palette-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); /* Tarjetas adaptables */
+    }
+}
+
+/* ==========================================================
+   ADAPTACIÓN PARA PANTALLAS VERTICALES (Celulares y Tablets)
+   ========================================================== */
+
+@media screen and (max-width: 768px) {
+    /* 1. La estructura general pasa a una sola columna vertical */
+    .app-layout {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+    }
+
+    .main-content, 
+    .palette-backdrop {
+        width: 100%;
+        min-height: 450px;
+        box-sizing: border-box;
+        padding: 15px;
+    }
+
+    /* 2. Distribución de las tarjetas en formato vertical */
+    .palette-grid {
+        /* Cambiamos a 1 sola columna o filas apiladas para pantallas verticales */
+        grid-template-columns: 1fr; 
+        gap: 15px;
+        width: 100%;
+    }
+
+    /* 3. Ajuste estético de cada tarjeta de color para que luzca vertical/horizontal cómoda */
+    .color-card {
+        width: 100%;
+        height: 85px; /* Altura ideal para visualizar el color y los iconos táctiles */
+        display: flex;
+        flex-direction: row; /* Mantiene el color a un lado y los textos/botones ordenados al otro */
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+        border-radius: 8px;
+    }
+}
