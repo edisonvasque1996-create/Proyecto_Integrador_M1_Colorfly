@@ -12,22 +12,22 @@
         <aside class="sidebar" aria-label="Panel de control y configuración">
             <header class="sidebar-header">
                 <div class="header-logo">
-                <a href="index.html">
-                <img src="https://lh3.googleusercontent.com/d/1pfkcy2nIEPBDylvUJBr7SoOyTyIxxzOh" alt="Logo de la empresa Colorfly Studio" class="logo">       
-                </a>
+                    <a href="index.html">
+                        <img src="https://lh3.googleusercontent.com/d/1pfkcy2nIEPBDylvUJBr7SoOyTyIxxzOh" alt="Logo de la empresa Colorfly Studio" class="logo">
+                    </a>
                 </div>
                 <h1>Colorfly Studio</h1>
                 <p>Explora, combina y fija combinaciones cromáticas únicas para dar vida a tus ideas visuales y proyectos creativos.</p>
             </header>
 
-            <div class="sidebar-controls">
+            <nav class="sidebar-controls" aria-label="Controles de generación">
                 <fieldset style="border: none; padding: 0; margin: 0;">
                     <legend class="sr-only" style="display: none;">Configuración de la paleta</legend>
                     
                     <div class="control-group">
                         <label for="palette-size">Tamaño de paleta:</label>
                         <select id="palette-size" aria-label="Seleccionar tamaño de la paleta">
-                            <option value="6"selected>6 colores</option>
+                            <option value="6" selected>6 colores</option>
                             <option value="8">8 colores</option>
                             <option value="9">9 colores</option>
                         </select>
@@ -44,19 +44,19 @@
                     <button id="generate-btn" class="btn-primary">Generar paleta</button>
                     <button id="save-palette-btn" class="btn-secondary" style="margin-top: 10px; width: 100%;">Guardar paleta actual</button>
                 </fieldset>
-            </div>
+            </nav>
 
-            <div class="saved-palettes-section">
+            <section class="saved-palettes-section" aria-label="Sección de paletas guardadas">
                 <h3>Paletas Guardadas</h3>
-                <div id="saved-palettes-container" class="saved-palettes-container">
+                <div id="saved-palettes-container" class="saved-palettes-container" role="region" aria-live="polite">
                     </div>
-            </div>
+            </section>
         </aside>
 
         <main class="main-content" aria-label="Área de visualización de paleta">
             <section id="palette-backdrop" class="palette-backdrop">
-                <div id="palette-container" class="palette-grid">
-                </div>
+                <div id="palette-container" class="palette-grid" role="grid" aria-label="Cuadrícula de colores generados">
+                    </div>
             </section>
         </main>
     </div>
