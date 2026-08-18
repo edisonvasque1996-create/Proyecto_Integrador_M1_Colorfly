@@ -155,15 +155,58 @@ select:focus, button:focus {
 
 .app-footer {
     position: absolute;
-    bottom: 10px;
-    right: 20px;
-    font-size: 0.7rem; /* 👈 Aquí lo haces más pequeño (puedes probar con 0.7rem si lo quieres aún más diminuto) */
-    color: #888888;     /* 👈 Aquí cambias el color (puedes usar HEX, RGB o variables como var(--text-color)) */
-    opacity: 0.85;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 12px;
     z-index: 10;
-    pointer-events: none; /* Evita que estorbe al hacer clic en las paletas */
+    font-size: 0.7rem;
+    color: #d1d5db;
+    opacity: 0.95;
     font-family: inherit;
-    letter-spacing: 0.3px; /* Opcional: le da un toque más profesional y legible al texto pequeño */
+    letter-spacing: 0.18px;
+    pointer-events: auto;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    white-space: nowrap;
+}
+
+.footer-author {
+    margin: 0;
+    color: #e5e7eb;
+    font-weight: 500;
+}
+
+.footer-socials ul {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-socials li {
+    display: inline-flex;
+    align-items: center;
+}
+
+.footer-socials a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-socials a:hover {
+    color: #ffffff;
+    transform: translateY(-1px);
 }
 .palette-backdrop {
     background: #0f172a;
