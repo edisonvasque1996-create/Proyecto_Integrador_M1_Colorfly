@@ -33,10 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'hex';
     }
 
+    function updatePaletteGridSize(size) {
+        paletteContainer.style.setProperty('--palette-count', size);
+    }
+
     function generatePalette() {
         const size = parseInt(paletteSizeSelect.value);
         const format = colorFormatSelect.value;
         const existingCards = paletteContainer.children;
+        updatePaletteGridSize(size);
 
         const currentColors = [];
         for (let i = 0; i < existingCards.length; i++) {
@@ -169,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             colorsPreview.addEventListener('click', () => {
                 paletteContainer.innerHTML = '';
+                updatePaletteGridSize(palette.length);
                 palette.forEach(col => createColorCard(col, false));
                 showToast('Paleta cargada');
             });
