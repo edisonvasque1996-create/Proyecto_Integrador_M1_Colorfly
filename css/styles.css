@@ -20,11 +20,14 @@
 }
 
 body, html {
-    height: 100vh;
+    min-height: 100vh;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: var(--bg-color);
+    background:
+        linear-gradient(180deg, rgba(25, 18, 12, 0.88), rgba(18, 14, 11, 0.96)),
+        linear-gradient(90deg, rgba(122, 83, 61, 0.7), rgba(46, 31, 24, 0.8), rgba(122, 83, 61, 0.7));
+    background-size: cover;
     color: var(--text-color);
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .app-layout {
@@ -449,44 +452,246 @@ select:focus, button:focus {
    ========================================================== */
 
 @media screen and (max-width: 768px) {
-    /* 1. La estructura general pasa a una sola columna vertical */
+    body, html {
+        overflow-x: hidden;
+        overflow-y: auto;
+        background:
+            linear-gradient(180deg, rgba(36, 25, 19, 0.9), rgba(20, 15, 12, 0.94)),
+            repeating-linear-gradient(
+                90deg,
+                rgba(145, 101, 78, 0.20) 0,
+                rgba(145, 101, 78, 0.20) 8px,
+                rgba(92, 60, 45, 0.18) 8px,
+                rgba(92, 60, 45, 0.18) 16px
+            );
+    }
+
     .app-layout {
+        display: flex;
         flex-direction: column;
-        height: auto;
+        width: min(100%, 420px);
         min-height: 100vh;
+        margin: 0 auto;
+        background: rgba(15, 23, 42, 0.9);
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.42);
     }
 
     .sidebar {
         width: 100%;
         height: auto;
         box-sizing: border-box;
+        padding: 1.25rem 1rem 1rem;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
     }
 
-    .main-content, 
-    .palette-backdrop {
-        width: 100%;
-        min-height: 450px;
-        box-sizing: border-box;
-        padding: 15px;
-    }
-
-    /* 2. Distribución de las tarjetas en formato vertical */
-    .palette-grid {
-        /* Cambiamos a 1 sola columna o filas apiladas para pantallas verticales */
-        grid-template-columns: 1fr; 
-        gap: 15px;
-        width: 100%;
-    }
-
-    /* 3. Ajuste estético de cada tarjeta de color para que luzca vertical/horizontal cómoda */
-    .color-card {
-        width: 100%;
-        height: 85px; /* Altura ideal para visualizar el color y los iconos táctiles */
+    .sidebar-header {
         display: flex;
-        flex-direction: row; /* Mantiene el color a un lado y los textos/botones ordenados al otro */
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .header-logo {
+        margin-bottom: 0.65rem;
+    }
+
+    .logo {
+        width: 60px;
+    }
+
+    .sidebar-header h1 {
+        font-size: 1.7rem;
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
+    }
+
+    .sidebar-header p {
+        font-size: 0.78rem;
+        line-height: 1.5;
+        max-width: 32ch;
+        margin: 0 auto;
+    }
+
+    .sidebar-controls {
+        margin-top: 1.5rem;
+        gap: 1rem;
+    }
+
+    .control-group {
+        width: 100%;
+    }
+
+    label {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+    }
+
+    select {
+        width: 100%;
+        padding: 0.8rem 0.85rem;
+        font-size: 0.95rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        display: block;
+        width: 100%;
+        margin-top: 0.75rem;
+        padding: 0.9rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .saved-palettes-section {
+        margin-top: 1rem;
+        max-height: none;
+        padding-top: 0.85rem;
+    }
+
+    .saved-palettes-section h3 {
+        font-size: 0.9rem;
+        margin-bottom: 0.65rem;
+    }
+
+    .saved-palettes-container {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+    }
+
+    .saved-palette-item {
+        display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 15px;
-        border-radius: 8px;
+        padding: 0.45rem;
+        min-height: 52px;
+    }
+
+    .saved-palette-colors {
+        flex-wrap: wrap;
+        gap: 2px;
+        justify-content: center;
+        flex: 1;
+    }
+
+    .mini-color-box {
+        width: 14px;
+        height: 14px;
+        border-radius: 3px;
+    }
+
+    .delete-palette-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        margin-left: 0.35rem;
+        flex-shrink: 0;
+    }
+
+    .main-content {
+        width: 100%;
+        min-height: 420px;
+        padding: 0.75rem 0.75rem 3.25rem;
+        align-items: stretch;
+        justify-content: stretch;
+    }
+
+    .palette-backdrop {
+        width: 100%;
+        min-height: 360px;
+        padding: 0.8rem;
+        border-radius: 18px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .palette-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding: 0.15rem 0.15rem 0.25rem;
+    }
+
+    .palette-grid::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .palette-grid::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 999px;
+    }
+
+    .color-card {
+        flex: 0 0 auto;
+        width: 100%;
+        min-height: 72px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0.7rem;
+        border-radius: 10px;
+    }
+
+    .card-actions {
+        position: static;
+        display: flex;
+        align-self: center;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        flex-shrink: 0;
+    }
+
+    .card-action-btn {
+        width: 28px;
+        height: 28px;
+    }
+
+    .color-info {
+        width: auto;
+        max-width: 100%;
+        font-size: 0.72rem;
+        padding: 0.35rem 0.5rem;
+        border-radius: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .app-footer {
+        left: 50%;
+        bottom: 10px;
+        transform: translateX(-50%);
+        width: calc(100% - 1.5rem);
+        font-size: 0.62rem;
+    }
+
+    .footer-content {
+        gap: 0.45rem;
+        justify-content: center;
+        flex-wrap: nowrap;
+    }
+
+    .footer-socials ul {
+        gap: 0.45rem;
+    }
+
+    .footer-socials a {
+        gap: 0.25rem;
+    }
+
+    .footer-author {
+        white-space: nowrap;
     }
 }
