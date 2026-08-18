@@ -9,10 +9,12 @@
     --border-color: #1e293b;
     --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
 }
+
 .logo {
-    width: 70px; /* Cambia este valor según el tamaño que prefieras (ej. 100px, 150px, 200px) */
-    height: auto; /* Mantiene la proporción original de la imagen para que no se deforme */
+    width: 70px;
+    height: auto;
 }
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -50,7 +52,7 @@ body, html {
 }
 
 .sidebar-header h1 {
-    font-size: 1.5  rem;
+    font-size: 1.5rem;
     color: #7e82aa;
     margin-bottom: 0.5rem;
     font-weight: 800;
@@ -141,6 +143,7 @@ select:focus, button:focus {
 }
 
 .main-content {
+    position: relative;
     height: 100vh;
     padding: 1.5rem;
     display: flex;
@@ -152,9 +155,6 @@ select:focus, button:focus {
 /* =========================================
    PIE DE PÁGINA (FOOTER)
    ========================================= */
-.main-content {
-    position: relative; /* Vital para que el absolute del footer se confine al panel derecho */
-}
 
 .app-footer {
     position: absolute;

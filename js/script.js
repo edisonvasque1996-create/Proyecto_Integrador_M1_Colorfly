@@ -7,11 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedPalettesContainer = document.getElementById('saved-palettes-container');
     const toast = document.getElementById('toast');
 
-    // Cargar paletas guardadas desde localStorage al iniciar
     let savedPalettes = JSON.parse(localStorage.getItem('savedPalettes')) || [];
     renderSavedPalettes();
 
-    // Generar un color aleatorio en HEX
     function getRandomHex() {
         const letters = '0123456789ABCDEF';
         let color = '#';
@@ -21,15 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return color;
     }
 
-    // Generar un color aleatorio en HSL
     function getRandomHsl() {
         const h = Math.floor(Math.random() * 360);
-        const s = Math.floor(Math.random() * 61) + 40; // 40% - 100%
-        const l = Math.floor(Math.random() * 51) + 25; // 25% - 75%
+        const s = Math.floor(Math.random() * 61) + 40;
+        const l = Math.floor(Math.random() * 51) + 25;
         return `hsl(${h}, ${s}%, ${l}%)`;
     }
 
-    // Detectar el formato del color original para conservarlo si está bloqueado
     function getColorFormat(colorValue) {
         if (typeof colorValue !== 'string') return 'hex';
         const normalized = colorValue.trim().toLowerCase();
@@ -37,13 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'hex';
     }
 
-    // Función principal para generar paleta
     function generatePalette() {
         const size = parseInt(paletteSizeSelect.value);
         const format = colorFormatSelect.value;
         const existingCards = paletteContainer.children;
 
-        // Si ya hay tarjetas, respetamos las que estén bloqueadas
         const currentColors = [];
         for (let i = 0; i < existingCards.length; i++) {
             const card = existingCards[i];
@@ -68,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let colorValue;
             let isLocked = false;
 
-            // Si ya existía y estaba bloqueada, conservamos su color
             if (currentColors[i] && currentColors[i].locked) {
                 colorValue = currentColors[i].color;
                 isLocked = true;
@@ -80,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Crear dinámicamente cada tarjeta de color con sus iconos
     function createColorCard(colorValue, isLocked = false, colorFormat = getColorFormat(colorValue)) {
         const card = document.createElement('div');
         card.classList.add('color-card');
@@ -90,11 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
         card.dataset.colorFormat = colorFormat;
         card.style.backgroundColor = colorValue;
 
-        // Contenedor de iconos (Bloquear y Copiar)
         const actionsDiv = document.createElement('div');
         actionsDiv.classList.add('card-actions');
 
-        // Botón de Bloqueo
         const lockBtn = document.createElement('button');
         lockBtn.classList.add('card-action-btn', 'lock-btn');
         lockBtn.innerHTML = `<i class="fa-solid ${isLocked ? 'fa-lock' : 'fa-lock-open'}"></i>`;
@@ -107,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
             lockBtn.innerHTML = `<i class="fa-solid ${lockedNow ? 'fa-lock' : 'fa-lock-open'}"></i>`;
         });
 
-        // Botón de Copiar
         const copyBtn = document.createElement('button');
         copyBtn.classList.add('card-action-btn', 'copy-btn');
         copyBtn.innerHTML = `<i class="fa-solid fa-copy"></i>`;
@@ -124,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
         actionsDiv.appendChild(lockBtn);
         actionsDiv.appendChild(copyBtn);
 
-        // Información de texto del color
         const info = document.createElement('div');
         info.classList.add('color-info');
         info.textContent = colorValue;
@@ -132,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
         card.appendChild(actionsDiv);
         card.appendChild(info);
 
-        // Permitir copiar también haciendo clic en la tarjeta entera
         card.addEventListener('click', () => {
             navigator.clipboard.writeText(colorValue).then(() => {
                 showToast(`¡Copiado: ${colorValue}!`);
@@ -142,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
         paletteContainer.appendChild(card);
     }
 
-    // Guardar la paleta actual en la barra lateral
     savePaletteBtn.addEventListener('click', () => {
         const cards = paletteContainer.children;
         if (cards.length === 0) return;
@@ -158,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('¡Paleta guardada en la barra lateral!');
     });
 
-    // Renderizar paletas guardadas en la barra lateral
     function renderSavedPalettes() {
         savedPalettesContainer.innerHTML = '';
 
@@ -182,14 +167,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 colorsPreview.appendChild(box);
             });
 
-            // Cargar la paleta guardada al hacer clic en la miniatura
             colorsPreview.addEventListener('click', () => {
                 paletteContainer.innerHTML = '';
                 palette.forEach(col => createColorCard(col, false));
                 showToast('Paleta cargada');
             });
 
-            // Botón para borrar la paleta guardada (Icono de papelera)
             const deleteBtn = document.createElement('button');
             deleteBtn.classList.add('delete-palette-btn');
             deleteBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
@@ -209,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Mostrar notificación Toast
     function showToast(message) {
         toast.textContent = message;
         toast.classList.remove('hidden');
@@ -222,9 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     }
 
-    // Event listeners
     generateBtn.addEventListener('click', generatePalette);
-
-    // Generar la primera paleta automáticamente al cargar la página
     generatePalette();
 });
