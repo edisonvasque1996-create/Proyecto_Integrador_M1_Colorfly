@@ -9,6 +9,10 @@
 </head>
 <body>
     <div class="app-layout">
+         <!-- =================================================
+             PANEL LATERAL
+             Contiene el logo, controles y paletas guardadas.
+             ================================================= -->
         <aside class="sidebar" aria-label="Panel de control y configuración">
             <header class="sidebar-header">
                 <div class="header-logo">
@@ -19,9 +23,20 @@
                 <h1>Colorfly Studio</h1>
                 <p>Explora, combina y fija combinaciones cromáticas únicas para dar vida a tus ideas visuales y proyectos creativos.</p>
             </header>
-
+ <!-- =================================================
+                 CONTROLES DE GENERACIÓN
+                 Permite configurar y generar la paleta.
+                 ================================================= -->
             <nav class="sidebar-controls" aria-label="Controles de generación">
                 <fieldset style="border: none; padding: 0; margin: 0;">
+                    <!--
+                    <fieldset> agrupa controles que pertenecen
+                    a una misma configuración.
+
+                    Se eliminan los estilos visuales predeterminados
+                    mediante style para permitir que CSS controle
+                    completamente su apariencia.
+                -->
                     <legend class="sr-only" style="display: none;">Configuración de la paleta</legend>
                     
                     <div class="control-group">
@@ -45,22 +60,40 @@
                     <button id="save-palette-btn" class="btn-secondary" style="margin-top: 10px; width: 100%;">Guardar paleta actual</button>
                 </fieldset>
             </nav>
-
+ <!-- =================================================
+                 PALETAS GUARDADAS
+                 Aquí JavaScript mostrará las paletas almacenadas.
+                 ================================================= -->
             <section class="saved-palettes-section" aria-label="Sección de paletas guardadas">
                 <h3>Paletas Guardadas</h3>
                 <div id="saved-palettes-container" class="saved-palettes-container" role="region" aria-live="polite">
                     </div>
             </section>
         </aside>
-
+ <!-- =====================================================
+             ÁREA PRINCIPAL
+             Aquí se muestran los colores generados.
+             ===================================================== -->
         <main class="main-content" aria-label="Área de visualización de paleta">
             <section id="palette-backdrop" class="palette-backdrop">
+                 <!--
+                    JavaScript genera dinámicamente aquí
+                    las tarjetas de colores.
+                -->
                 <div id="palette-container" class="palette-grid" role="grid" aria-label="Cuadrícula de colores generados">
                     </div>
             </section>
+
+            <footer class="app-footer">
+        Desarrollado por Edison Minango &bull; Proyecto Integrador I
+    </footer>
+
         </main>
     </div>
-
+ <!-- =====================================================
+         NOTIFICACIÓN
+         Muestra mensajes como "Código copiado".
+         ===================================================== -->
     <div id="toast" class="toast hidden" role="status" aria-live="polite">¡Código copiado al portapapeles!</div>
 
     <script src="js/script.js"></script>

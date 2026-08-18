@@ -29,6 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return `hsl(${h}, ${s}%, ${l}%)`;
     }
 
+    // Detectar el formato del color original para conservarlo si está bloqueado
+    function getColorFormat(colorValue) {
+        if (typeof colorValue !== 'string') return 'hex';
+        const normalized = colorValue.trim().toLowerCase();
+        if (normalized.startsWith('hsl')) return 'hsl';
+        return 'hex';
+    }
+
     // Función principal para generar paleta
     function generatePalette() {
         const size = parseInt(paletteSizeSelect.value);
@@ -41,12 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = existingCards[i];
             if (card.classList.contains('locked')) {
                 currentColors.push({
-                    color: card.style.backgroundColor,
+                    color: card.dataset.colorValue || card.style.backgroundColor,
+                    format: card.dataset.colorFormat || getColorFormat(card.style.backgroundColor),
                     locked: true
                 });
             } else {
                 currentColors.push({
                     color: null,
+                    format: null,
                     locked: false
                 });
             }
@@ -66,15 +76,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 colorValue = format === 'hex' ? getRandomHex() : getRandomHsl();
             }
 
-            createColorCard(colorValue, isLocked);
+            createColorCard(colorValue, isLocked, currentColors[i]?.format || getColorFormat(colorValue));
         }
     }
 
     // Crear dinámicamente cada tarjeta de color con sus iconos
-    function createColorCard(colorValue, isLocked = false) {
+    function createColorCard(colorValue, isLocked = false, colorFormat = getColorFormat(colorValue)) {
         const card = document.createElement('div');
         card.classList.add('color-card');
         if (isLocked) card.classList.add('locked');
+
+        card.dataset.colorValue = colorValue;
+        card.dataset.colorFormat = colorFormat;
         card.style.backgroundColor = colorValue;
 
         // Contenedor de iconos (Bloquear y Copiar)
@@ -136,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const paletteColors = [];
         for (let card of cards) {
-            paletteColors.push(card.style.backgroundColor);
+            paletteColors.push(card.dataset.colorValue || card.style.backgroundColor);
         }
 
         savedPalettes.push(paletteColors);
