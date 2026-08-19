@@ -84,23 +84,7 @@ Se implementaron iteraciones enfocadas en optimizar la experiencia de usuario (U
 
 ## Estructura del Proyecto
 
-Proyecto_Integrador_M1_Colorfly/
-│
-├── 📂 css/
-│   └── styles.css          # Variables CSS (Custom Properties), layout (Flexbox/Grid),
-│                           # animaciones y estilos de la interfaz responsiva.
-│
-├── 📂 js/
-│   └── script.js           # Lógica principal de la aplicación: manipulación del DOM,
-│                           # algoritmo de generación de colores, sistema de candados (Lock),
-│                           # copiado al portapapeles y gestión de localStorage.
-│
-├── 📂 docs/
-│   └── PROMPTS.md          # Registro y documentación detallada de las instrucciones y 
-│                           # prompts de Inteligencia Artificial utilizados en el proyecto.
-│
-├── index.html              # Estructura principal y marcado HTML5 semántico.
-└── README.md               # Documentación general y guía técnica del repositorio.
+![Estructura del proyecto](https://lh3.googleusercontent.com/d/1b0DGXG6sWlKKGkQGYps3nH4viG0bAGqK)
 
 ---
 
