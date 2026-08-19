@@ -1,61 +1,121 @@
-Aplicación web interactiva diseñada para la generación dinámica de paletas de colores aleatorias.
 
-Proyecto Integrador #1
-Desarrollado por: Edison Minango
-link: https://edisonvasque1996-create.github.io/Proyecto_Integrador_M1_Colorfly/ 
+# 🎨 Colorfly Studio | Generador & Gestor de Paletas de Colores
 
-TECNOLOGIAS UTILIZADAS 
+> **Proyecto #1 | Módulo 1**  
+> **Desarrollado por:** Edison Minango  
+> **Demo en Vivo:** [Colorfly Studio en GitHub Pages](https://edisonvasque1996-create.github.io/Proyecto_Integrador_M1_Colorfly/)
 
-- HTML5: Para una estructura de contenido semántica e idónea.
-- CSS3: Para el diseño, estilo y la optimización de la interfaz visual.
-- JavaScript: Para la lógica de negocio y la manipulación dinámica del DOM, permitiendo la generación aleatoria de paletas en tiempo real.
+![Demostración de Colorfly Studio](https://lh3.googleusercontent.com/d/1n1-GzyFanFILH18WNqRPzIw7-CPqVEJr)
 
-ESTRUCTURA DEL PROYECTO
- 
+---
+
+## Descripción del Proyecto
+
+**Colorfly Studio** es una herramienta web interactiva de apoyo visual y creativo diseñada para la generación y gestión procedural de paletas de colores. Su objetivo principal es facilitar la exploración cromática y agilizar la toma de decisiones en proyectos de diseño UI/UX, desarrollo web y creación artística.
+
+La aplicación permite descubrir combinaciones tonales armónicas o contrastantes, ajustar la cantidad de elementos en la paleta, bloquear colores específicos y guardar selecciones favoritas de forma persistente.
+
+---
+
+## Índice
+
+- [Descripción del Proyecto](#-descripción-del-proyecto)
+- [Características Principales](#-características-principales)
+- [Flujo de Uso y Funcionalidades](#-flujo-de-uso-y-funcionalidades)
+- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
+- [Decisiones Técnicas y Arquitectura](#-decisiones-técnicas-y-arquitectura)
+- [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Autor](#-autor)
+- [Prompts de IA Utilizados - Colorfly Studio](#-prompts-ia)
+
+---
+
+## Características Principales
+
+- **Generación Dinámica:** Creación instantánea de paletas cromáticas mediante algoritmos de generación procedimental.
+- **Bloqueo de Colores (Lock System):** Permite fijar tonalidades específicas mediante un icono de candado mientras se regeneran los colores restantes.
+- **Gestión de Formatos:** Consulta de valores cromáticos en espacios de color Hexadecimal (HEX) y HCL.
+- **Copiado en Un Clic:** Integración con la API del portapapeles (*Clipboard API*) para copiar códigos de color con retroalimentación visual inmediata (notificaciones tipo *Toast*).
+- **Persistencia Local:** Guardado de paletas favoritas en el navegador utilizando `localStorage`.
+- **Diseño Responsive:** Interfaz adaptativa optimizada para dispositivos móviles, tablets y monitores de alta resolución utilizando CSS Grid y Flexbox.
+- **Zero Dependencies:** Desarrollado 100% con JavaScript Vanilla para garantizar un rendimiento óptimo y una carga ultrarrápida sin librerías externas.
+
+---
+
+## Flujo de Uso y Funcionalidades
+
+### Guía Paso a Paso
+
+1. **Configurar el tamaño de la paleta:** En el panel lateral, selecciona la cantidad de colores deseada (6, 8 o 9 bloques cromáticos).
+2. **Elegir formato de color:** Define el espacio de color preferido para visualizar las tarjetas.
+3. **Generar colores:** Haz clic en el botón **"Generar colores"** para obtener una combinación aleatoria.
+4. **Bloquear tonalidades:** Si te gusta un color en particular, haz clic en el icono de candado para mantenerlo fijo en las siguientes generaciones.
+5. **Copiar al portapapeles:** Haz clic sobre el código del color deseado para copiarlo directamente.
+6. **Guardar en Favoritos:** Almacena la paleta completa en tu panel de guardados para consultarla o gestionarla posteriormente.
+
+---
+
+## Tecnologías Utilizadas
+
+- **HTML5:** Marcado semántico y accesible (`<aside>`, `<main>`, `<section>`).
+- **CSS3:** Manipulación de variables nativas (*Custom Properties*), Flexbox, CSS Grid Layout y animaciones/transiciones de interfaz.
+- **JavaScript (ES6+):** Manipulación dinámica del DOM, gestión de eventos, interactividad y persistencia con `localStorage`.
+
+---
+
+## Decisiones Técnicas y Arquitectura
+
+### 1. Estructura Base y Separación de Responsabilidades
+El desarrollo se basó en una arquitectura modular limpia, asegurando la estricta separación de responsabilidades:
+- **Estructura Semántica:** Marcado HTML5 estándar para mejorar la accesibilidad e indexación.
+- **Diseño Separado:** Todos los estilos visuales residen en hojas externas (CSS), evitando el uso de estilos en línea (*inline styles*).
+- **Lógica Reactiva:** Manejo del estado de la aplicación, interacción con el cliente y algoritmos de color aislados en JavaScript modular.
+
+### 2. Diseño de Interfaz e Iteraciones Visuales
+Se implementaron iteraciones enfocadas en optimizar la experiencia de usuario (UX):
+- Disposición adaptativa de las tarjetas para garantizar la coherencia estética en configuraciones de 6, 8 o 9 elementos.
+- Notificaciones flotantes (*Toasts*) para dar retroalimentación clara e inmediata en acciones como copiado y guardado.
+
+### 3. Control de Estado en el Cliente
+- **Sistema de Candados:** Control dinámico que filtra únicamente los elementos no bloqueados al invocar la función de regeneración.
+- **Persistencia de Datos:** Uso de `localStorage` para almacenar objetos de paletas guardadas, permitiendo la recuperación o eliminación individualizada sin necesidad de un backend.
+
+---
+
+## Estructura del Proyecto
+
 Proyecto_Integrador_M1_Colorfly/
-├── index.html          # Estructura principal y semántica
-├── css/
-│   └── styles.css      # Estilos y diseño visual
-├── js/
-│   └── script.js       # Lógica de manipulación del DOM y generación de paletas
-└── README.md           # Documentación del proyecto
+│
+├── 📂 css/
+│   └── styles.css          # Variables CSS (Custom Properties), layout (Flexbox/Grid),
+│                           # animaciones y estilos de la interfaz responsiva.
+│
+├── 📂 js/
+│   └── script.js           # Lógica principal de la aplicación: manipulación del DOM,
+│                           # algoritmo de generación de colores, sistema de candados (Lock),
+│                           # copiado al portapapeles y gestión de localStorage.
+│
+├── 📂 docs/
+│   └── PROMPTS.md          # Registro y documentación detallada de las instrucciones y 
+│                           # prompts de Inteligencia Artificial utilizados en el proyecto.
+│
+├── index.html              # Estructura principal y marcado HTML5 semántico.
+└── README.md               # Documentación general y guía técnica del repositorio.
 
+---
 
-FUNCIONALIDAD Y PROPOSITO
+## Autor
 
-Esta aplicación está diseñada para servir como una herramienta de apoyo visual y creativo. Su función principal es generar paletas de colores aleatorias que ayudan a explorar nuevas combinaciones tonales, facilitando la toma de decisiones en proyectos de diseño, desarrollo web y creación artística. Permite descubrir rápidamente gamas de colores armónicas o contrastantes para visualizar y aplicar distintas tonalidades dentro de un espacio o interfaz.
+**Edison Minango**
+**Arquitecto & Desarrollador Web Full Stack en formación**
+- **Proyecto:** Colorfly Studio — Generador & Gestor de Paletas
+- **GitHub:** [@edisonvasque1996-create](https://github.com/edisonvasque1996-create)
 
+---
 
-- INSTRUCCION DEL USO
+## Prompts de IA Utilizados - Colorfly Studio
 
-1) Seleccionar la cantidad de colores: En la barra de herramientas ubicada en la parte superior de la página, elige el número de colores que deseas incluir en tu paleta (puedes seleccionar entre 6, 8 o 9 colores según tus necesidades).
+**[Ver Documentación de Prompts](./docs/PROMPTS.md)**
 
-2) Generar la paleta: Haz clic en el botón "Generar colores" ubicado en el panel derecho.
+[⬆ Volver al README principal](./README.md)
 
-3) Visualizar los resultados: Inmediatamente se mostrará en la parte inferior la paleta generada de forma aleatoria, detallando para cada color su respectivo código en formato HEX y su valor en espacio de color HCL.
-
-- DESICIONES TECNICAS
-
-1) Estructura Base y Arquitectura (Rama Principal)
-
-El desarrollo partió de una arquitectura limpia basada en los fundamentos del DOM y las directrices del proyecto, priorizando el uso de etiquetas HTML5 semánticas (<aside>, <main>, <section>) para comunicar claramente el propósito de cada sección.
-
-Se aseguró una estricta separación de responsabilidades: diseño visual delegado al CSS externo (evitando estilos inline) y la lógica de negocio y reactividad manejada mediante JavaScript modular.
-
-2) Evolución visual y de interfaz
-
-A partir de la estructura base, se implementaron iteraciones enfocadas en optimizar la experiencia del usuario, mejorando la disposición visual de las tarjetas de colores, la fluidez en las interacciones y la adaptabilidad de la herramienta.
-
-Se unificaron los estilos visuales para garantizar la compatibilidad con los modos de visualización (como el soporte coherente de tarjetas y paletas dinámicas de 6, 8 o 9 elementos).
-
-3) Interactividad y Control de Estado en el Cliente
-
-Generación Dinámica: Implementación de algoritmos en JavaScript para la creación procedural de colores aleatorios en formatos de color configurables.
-
-Gestión de Funcionalidades Avanzadas: * Incorporación de un sistema de bloqueo de colores individuales mediante iconos (candados) para preservar selecciones específicas durante la generación de nuevas paletas.
-
-Integración de un portapapeles interactivo con retroalimentación visual inmediata mediante notificaciones flotantes tipo Toast.
-
-Almacenamiento local persistente (localStorage) para guardar paletas favoritas directamente desde la barra lateral, permitiendo su consulta posterior y eliminación individualizada.
-
-PROMPS ENLACE EN DRIVE: 

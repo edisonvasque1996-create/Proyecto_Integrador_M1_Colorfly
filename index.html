@@ -8,15 +8,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- =====================================================
+         LAYOUT PRINCIPAL
+         Distribuye la barra lateral y la vista de la paleta.
+         ===================================================== -->
     <div class="app-layout">
          <!-- =================================================
              PANEL LATERAL
              Contiene el logo, controles y paletas guardadas.
              ================================================= -->
         <aside class="sidebar" aria-label="Panel de control y configuración">
+            <!-- Cabecera principal: marca y descripción breve del producto -->
             <header class="sidebar-header">
                 <div class="header-logo">
-                    <a href="index.html">
+                    <a href="index.html" aria-label="Volver al inicio">
                         <img src="https://lh3.googleusercontent.com/d/1pfkcy2nIEPBDylvUJBr7SoOyTyIxxzOh" alt="Logo de la empresa Colorfly Studio" class="logo">
                     </a>
                 </div>
@@ -28,17 +33,9 @@
                  Permite configurar y generar la paleta.
                  ================================================= -->
             <nav class="sidebar-controls" aria-label="Controles de generación">
-                <fieldset style="border: none; padding: 0; margin: 0;">
-                    <!--
-                    <fieldset> agrupa controles que pertenecen
-                    a una misma configuración.
+                <fieldset class="sidebar-fieldset">
+                    <legend class="sr-only">Configuración de la paleta</legend>
 
-                    Se eliminan los estilos visuales predeterminados
-                    mediante style para permitir que CSS controle
-                    completamente su apariencia.
-                -->
-                    <legend class="sr-only" style="display: none;">Configuración de la paleta</legend>
-                    
                     <div class="control-group">
                         <label for="palette-size">Tamaño de paleta:</label>
                         <select id="palette-size" aria-label="Seleccionar tamaño de la paleta">
@@ -57,7 +54,7 @@
                     </div>
 
                     <button id="generate-btn" class="btn-primary">Generar paleta</button>
-                    <button id="save-palette-btn" class="btn-secondary" style="margin-top: 10px; width: 100%;">Guardar paleta actual</button>
+                    <button id="save-palette-btn" class="btn-secondary save-palette-btn">Guardar paleta actual</button>
                 </fieldset>
             </nav>
  <!-- =================================================
@@ -74,14 +71,14 @@
              ÁREA PRINCIPAL
              Aquí se muestran los colores generados.
              ===================================================== -->
+        <!-- =====================================================
+             ÁREA DE VISUALIZACIÓN
+             Aquí se muestra la paleta generada y los colores activos.
+             ===================================================== -->
         <main class="main-content" aria-label="Área de visualización de paleta">
+            <!-- Área principal de trabajo: aquí se renderiza la paleta actual -->
             <section id="palette-backdrop" class="palette-backdrop">
-                 <!--
-                    JavaScript genera dinámicamente aquí
-                    las tarjetas de colores.
-                -->
-                <div id="palette-container" class="palette-grid" role="grid" aria-label="Cuadrícula de colores generados">
-                    </div>
+                <div id="palette-container" class="palette-grid" role="grid" aria-label="Cuadrícula de colores generados"></div>
             </section>
 
             <footer class="app-footer" aria-label="Pie de página del proyecto">

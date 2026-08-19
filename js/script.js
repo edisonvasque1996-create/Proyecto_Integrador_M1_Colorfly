@@ -1,4 +1,9 @@
+/* =====================================================
+   INICIALIZACIÓN DE LA APLICACIÓN
+   Conecta el DOM con la lógica principal del generador.
+   ===================================================== */
 document.addEventListener('DOMContentLoaded', () => {
+    // Referencias principales del DOM que controlan la app.
     const paletteContainer = document.getElementById('palette-container');
     const generateBtn = document.getElementById('generate-btn');
     const savePaletteBtn = document.getElementById('save-palette-btn');
@@ -7,9 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedPalettesContainer = document.getElementById('saved-palettes-container');
     const toast = document.getElementById('toast');
 
+    // Estado persistente de la aplicación: paletas guardadas localmente.
     let savedPalettes = JSON.parse(localStorage.getItem('savedPalettes')) || [];
     renderSavedPalettes();
 
+    // Genera un color hexadecimal aleatorio para la paleta actual.
     function getRandomHex() {
         const letters = '0123456789ABCDEF';
         let color = '#';
@@ -19,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return color;
     }
 
+    // Genera un color en formato HSL para ofrecer variedad cromática.
     function getRandomHsl() {
         const h = Math.floor(Math.random() * 360);
         const s = Math.floor(Math.random() * 61) + 40;
@@ -26,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return `hsl(${h}, ${s}%, ${l}%)`;
     }
 
+    // Detecta el formato real del valor para conservar consistencia en la UI.
     function getColorFormat(colorValue) {
         if (typeof colorValue !== 'string') return 'hex';
         const normalized = colorValue.trim().toLowerCase();
@@ -33,10 +42,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'hex';
     }
 
+    // Ajusta la cantidad de columnas visuales según la paleta actual.
     function updatePaletteGridSize(size) {
         paletteContainer.style.setProperty('--palette-count', size);
     }
 
+    // Centraliza la copia al portapapeles para evitar repetir lógica.
+    function copyColorValue(colorValue) {
+        return navigator.clipboard.writeText(colorValue);
+    }
+
+    /* =====================================================
+       GENERACIÓN DE PALLETAS
+       Crea colores aleatorios y conserva los bloqueados por el usuario.
+       ===================================================== */
     function generatePalette() {
         const size = parseInt(paletteSizeSelect.value);
         const format = colorFormatSelect.value;
@@ -109,8 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         copyBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            // Convertir color a formato texto legible si es necesario
-            navigator.clipboard.writeText(colorValue).then(() => {
+            copyColorValue(colorValue).then(() => {
                 showToast(`¡Copiado: ${colorValue}!`);
             });
         });
@@ -126,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card.appendChild(info);
 
         card.addEventListener('click', () => {
-            navigator.clipboard.writeText(colorValue).then(() => {
+            copyColorValue(colorValue).then(() => {
                 showToast(`¡Copiado: ${colorValue}!`);
             });
         });
@@ -134,6 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
         paletteContainer.appendChild(card);
     }
 
+    /* =====================================================
+       PERSISTENCIA DE PALETAS
+       Guarda y recupera combinaciones desde localStorage.
+       ===================================================== */
     savePaletteBtn.addEventListener('click', () => {
         const cards = paletteContainer.children;
         if (cards.length === 0) return;
@@ -149,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('¡Paleta guardada en la barra lateral!');
     });
 
+    // Renderiza la lista de paletas guardadas con miniaturas y acciones individuales.
     function renderSavedPalettes() {
         savedPalettesContainer.innerHTML = '';
 
@@ -198,6 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* =====================================================
+       FEEDBACK VISUAL
+       Muestra mensajes de confirmación como copia o guardado.
+       ===================================================== */
     function showToast(message) {
         toast.textContent = message;
         toast.classList.remove('hidden');
@@ -210,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     }
 
+    // Inicio de la aplicación: genera la paleta inicial al cargar la vista.
     generateBtn.addEventListener('click', generatePalette);
     generatePalette();
 });
